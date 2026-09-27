@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>С Днём Рождения, Виктория ❤️</title>
+<title>С Днём Рождения, Викуля ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -312,9 +312,9 @@ body {
   <div class="hero-content">
     <p class="pre-title">Сегодня особенный день</p>
     <h1 class="title">С Днём Рождения</h1>
-    <h2 class="name">Виктория</h2>
+    <h2 class="name">Викуля</h2>
     <p class="full-name">Елисеева Виктория Александровна</p>
-    <p class="subtitle">Этот сайт создан только для тебя ❤️</p>
+    <p class="subtitle">Сегодня твой день 🎂</p>
     <button class="start-btn" onclick="scrollToGallery()">Смотреть ↓</button>
   </div>
 </section>
@@ -376,7 +376,7 @@ body {
 
 <!-- VOICE -->
 <section class="voice-section">
-  <h2 class="section-title">Слушай меня</h2>
+  <h2 class="section-title">Немного от меня</h2>
   <div class="voice-card">
     <div class="voice-icon">🎤</div>
     <p class="voice-text">Я записал для тебя сообщение</p>
@@ -415,29 +415,19 @@ body {
 <section class="love-langs-section">
   <h2 class="section-title">Это звучит так</h2>
   <div class="love-grid">
-    <div class="love-item"><span>Русский</span><strong>Я тебя люблю</strong></div>
-    <div class="love-item"><span>English</span><strong>I love you</strong></div>
-    <div class="love-item"><span>Français</span><strong>Je t'aime</strong></div>
-    <div class="love-item"><span>Español</span><strong>Te quiero</strong></div>
-    <div class="love-item"><span>Italiano</span><strong>Ti amo</strong></div>
-    <div class="love-item"><span>Deutsch</span><strong>Ich liebe dich</strong></div>
-    <div class="love-item"><span>日本語</span><strong>愛してる</strong></div>
-    <div class="love-item"><span>한국어</span><strong>사랑해</strong></div>
-    <div class="love-item"><span>中文</span><strong>我爱你</strong></div>
+    <div class="love-item"><span>Русский</span><strong>С днём рождения!</strong></div>
+    <div class="love-item"><span>English</span><strong>Happy Birthday!</strong></div>
+    <div class="love-item"><span>Français</span><strong>Joyeux anniversaire !</strong></div>
+    <div class="love-item"><span>Español</span><strong>¡Feliz cumpleaños!</strong></div>
+    <div class="love-item"><span>Italiano</span><strong>Buon compleanno!</strong></div>
+    <div class="love-item"><span>Deutsch</span><strong>Alles Gute zum Geburtstag!</strong></div>
+    <div class="love-item"><span>日本語</span><strong>お誕生日おめでとう！</strong></div>
+    <div class="love-item"><span>한국어</span><strong>생일 축하해!</strong></div>
+    <div class="love-item"><span>中文</span><strong>生日快乐！</strong></div>
   </div>
 </section>
 
 <!-- COUNTERS -->
-<section class="counter-section">
-  <h2 class="section-title">Мы вместе уже</h2>
-  <div class="counter">
-    <div class="counter-item"><span id="days">0</span><small>дней</small></div>
-    <div class="counter-item"><span id="hours">0</span><small>часов</small></div>
-    <div class="counter-item"><span id="minutes">0</span><small>минут</small></div>
-    <div class="counter-item"><span id="seconds">0</span><small>секунд</small></div>
-  </div>
-</section>
-
 <section class="counter-section">
   <h2 class="section-title">До следующего дня рождения</h2>
   <div class="counter">
@@ -469,13 +459,13 @@ body {
 <!-- FINAL -->
 <section class="final-section">
   <div class="final-content">
-    <p class="final-pre">Елисеева Виктория Александровна</p>
+    <p class="final-pre">Викуля</p>
     <h2 class="final-title">С Днём Рождения</h2>
     <p class="final-text">Ты — моё всё. Спасибо, что ты есть ❤️</p>
     <div class="cake">🎂</div>
     <div class="social-buttons">
-      <a href="https://t.me/твой_ник" target="_blank" class="social-btn">💬 Написать мне</a>
-      <a href="tel:+79991234567" class="social-btn">📞 Позвонить</a>
+      <a href="https://t.me/@saaaackk" target="_blank" class="social-btn">💬 Написать мне</a>
+      <a href="tel:+79521689886" class="social-btn">📞 Позвонить</a>
     </div>
   </div>
 </section>
@@ -490,7 +480,7 @@ body {
 
 <script>
 /* ================== ПАРОЛЬ ================== */
-const SECRET_WORD = 'виктория'; // поменяй на своё слово
+const SECRET_WORD = '28092009'; // поменяй на своё слово
 
 function checkPassword() {
   const input = document.getElementById('lockInput').value.trim().toLowerCase();
@@ -530,7 +520,7 @@ musicBtn.addEventListener('click', () => {
 /* ================== СЕРДЕЧКИ ================== */
 function createHearts() {
   const container = document.querySelector('.hearts');
-  const symbols = ['❤️','💕','💖','💗','💓','🌸','✨'];
+  const symbols = ['🎈','🎉','🎂','🎁','🌟','⭐','✨'];
   setInterval(() => {
     const h = document.createElement('div');
     h.className = 'heart';
@@ -750,7 +740,7 @@ finalObs.observe(document.querySelector('.final-section'));
 document.addEventListener('mousemove', e => {
   if (Math.random() > 0.9) {
     const h = document.createElement('div');
-    h.textContent = '❤️';
+    h.textContent = '✨';
     h.style.position = 'fixed';
     h.style.left = e.clientX + 'px';
     h.style.top = e.clientY + 'px';
