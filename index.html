@@ -488,23 +488,30 @@ body {
 
 <script>
 /* ================== ПАРОЛЬ ================== */
-const SECRET_WORD = '28092009'; // поменяй на своё слово
+const SECRET_WORD = '28092009';
 
 function checkPassword() {
   const input = document.getElementById('lockInput').value.trim().toLowerCase();
   const error = document.getElementById('lockError');
   if (input === SECRET_WORD.toLowerCase()) {
     document.getElementById('lockScreen').classList.add('hidden');
-    setTimeout(() => document.getElementById('lockScreen').remove(), 800);
+    setTimeout(() => {
+      const ls = document.getElementById('lockScreen');
+      if (ls) ls.remove();
+    }, 800);
     startConfetti();
   } else {
     error.textContent = 'Неправильно. Когда у тебя ДР? 🎂';
     document.getElementById('lockInput').value = '';
   }
 }
-document.getElementById('lockInput').addEventListener('keypress', e => {
-  if (e.key === 'Enter') checkPassword();
-});
+
+const lockInput = document.getElementById('lockInput');
+if (lockInput) {
+  lockInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') checkPassword();
+  });
+}
 
 /* ================== МУЗЫКА ================== */
 const musicBtn = document.getElementById('musicBtn');
@@ -512,23 +519,26 @@ const musicIcon = document.getElementById('musicIcon');
 const bgMusic = document.getElementById('bgMusic');
 let isPlaying = false;
 
-musicBtn.addEventListener('click', () => {
-  if (isPlaying) {
-    bgMusic.pause();
-    musicIcon.textContent = '♪';
-    musicBtn.classList.remove('playing');
-  } else {
-    bgMusic.play().catch(err => console.log(err));
-    musicIcon.textContent = '❚❚';
-    musicBtn.classList.add('playing');
-  }
-  isPlaying = !isPlaying;
-});
+if (musicBtn) {
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      musicIcon.textContent = '♪';
+      musicBtn.classList.remove('playing');
+    } else {
+      bgMusic.play().catch(err => console.log(err));
+      musicIcon.textContent = '❚❚';
+      musicBtn.classList.add('playing');
+    }
+    isPlaying = !isPlaying;
+  });
+}
 
-/* ================== СЕРДЕЧКИ ================== */
+/* ================== ШАРИКИ ================== */
 function createHearts() {
   const container = document.querySelector('.hearts');
-  const symbols = ['🎈','🎉','🎂','🎁','🌟','⭐','✨'];
+  if (!container) return;
+  const symbols = ['🎈','🎉','🎂','🎁','⭐','✨','🌟'];
   setInterval(() => {
     const h = document.createElement('div');
     h.className = 'heart';
@@ -544,18 +554,20 @@ createHearts();
 
 /* ================== СКРОЛЛ ================== */
 function scrollToGallery() {
-  document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+  const g = document.getElementById('gallery');
+  if (g) g.scrollIntoView({ behavior: 'smooth' });
 }
 
 /* ================== СЛАЙДЕР ================== */
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 function changeSlide(dir) {
+  if (!slides.length) return;
   slides[currentSlide].classList.remove('active');
   currentSlide = (currentSlide + dir + slides.length) % slides.length;
   slides[currentSlide].classList.add('active');
 }
-setInterval(() => changeSlide(1), 4000);
+if (slides.length) setInterval(() => changeSlide(1), 4000);
 
 /* ================== ЛАЙТБОКС ================== */
 const lightbox = document.getElementById('lightbox');
@@ -563,68 +575,61 @@ const lightboxImg = document.getElementById('lightboxImg');
 document.querySelectorAll('.slide').forEach(s => {
   s.addEventListener('click', () => {
     const img = s.querySelector('img');
-    lightboxImg.src = img.src;
-    lightbox.classList.add('active');
+    if (img && lightboxImg && lightbox) {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+    }
   });
 });
-document.querySelector('.close').addEventListener('click', () => lightbox.classList.remove('active'));
-lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
-
-/* ================== СЧЁТЧИК ВМЕСТЕ ================== */
-// Дата начала ваших отношений: год, месяц-1, день
-const startDate = new Date(2022, 2, 15);
-function updateCounter() {
-  const diff = new Date() - startDate;
-  document.getElementById('days').textContent = Math.floor(diff / 86400000);
-  document.getElementById('hours').textContent = Math.floor((diff / 3600000) % 24);
-  document.getElementById('minutes').textContent = Math.floor((diff / 60000) % 60);
-  document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60);
+const closeBtn = document.querySelector('.close');
+if (closeBtn) closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+if (lightbox) {
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('active');
+  });
 }
-setInterval(updateCounter, 1000);
-updateCounter();
 
 /* ================== СЧЁТЧИК ДО ДР ================== */
-// 28 сентября — ДР Виктории
-const bdayMonth = 8; // сентябрь = 8 (0-11)
+const bdayMonth = 8; // сентябрь = 8
 const bdayDay = 28;
 function updateNextBday() {
   const now = new Date();
   let next = new Date(now.getFullYear(), bdayMonth, bdayDay, 0, 0, 0);
   if (next < now) next = new Date(now.getFullYear() + 1, bdayMonth, bdayDay, 0, 0, 0);
   const diff = next - now;
-  document.getElementById('nb-days').textContent = Math.floor(diff / 86400000);
-  document.getElementById('nb-hours').textContent = Math.floor((diff / 3600000) % 24);
-  document.getElementById('nb-min').textContent = Math.floor((diff / 60000) % 60);
-  document.getElementById('nb-sec').textContent = Math.floor((diff / 1000) % 60);
+  const d = document.getElementById('nb-days');
+  const h = document.getElementById('nb-hours');
+  const m = document.getElementById('nb-min');
+  const s = document.getElementById('nb-sec');
+  if (d) d.textContent = Math.floor(diff / 86400000);
+  if (h) h.textContent = Math.floor((diff / 3600000) % 24);
+  if (m) m.textContent = Math.floor((diff / 60000) % 60);
+  if (s) s.textContent = Math.floor((diff / 1000) % 60);
 }
 setInterval(updateNextBday, 1000);
 updateNextBday();
 
-/* ================== КОМПЛИМЕНТЫ ================== */
+/* ================== ПОЖЕЛАНИЯ ================== */
 const compliments = [
-  'Ты самая красивая девушка на свете',
-  'Твоя улыбка — моё любимое зрелище',
-  'Ты умнее всех, кого я знаю',
-  'С тобой каждый день как праздник',
-  'Ты моё вдохновение и моя муза',
-  'Твои глаза — моя вселенная',
-  'Ты делаешь этот мир лучше',
-  'Твой смех — моя любимая музыка',
-  'Ты самая заботливая и нежная',
-  'Мне повезло, что ты со мной',
-  'Ты — лучшее, что случилось в моей жизни',
-  'Каждый день с тобой — подарок',
-  'Ты сильная и красивая одновременно',
-  'Твоя доброта не знает границ',
-  'Я не перестаю удивляться тебе',
-  'Ты — моё счастье',
-  'Ты — моя половинка',
-  'С тобой я лучшая версия себя',
-  'Твой голос успокаивает меня',
-  'Ты — моя мечта, которая сбылась'
+  'Пусть каждый день приносит радость',
+  'Желаю исполнения всех желаний',
+  'Пусть здоровье будет крепким',
+  'Пусть рядом будут близкие люди',
+  'Желаю ярких впечатлений и путешествий',
+  'Пусть учёба приносит удовольствие',
+  'Желаю много поводов для улыбки',
+  'Пусть мечты сбываются',
+  'Желаю верных друзей',
+  'Пусть каждый год будет лучше предыдущего',
+  'Желаю вдохновения и сил',
+  'Пусть удача всегда будет рядом',
+  'Желаю тебе мира и спокойствия',
+  'Пусть сбудутся самые смелые мечты',
+  'Желаю тебе счастья и тепла'
 ];
 function generateCompliment() {
   const d = document.getElementById('complimentDisplay');
+  if (!d) return;
   d.classList.add('fade');
   setTimeout(() => {
     d.textContent = compliments[Math.floor(Math.random() * compliments.length)];
@@ -633,16 +638,25 @@ function generateCompliment() {
 }
 
 /* ================== ИГРА ================== */
-let gameActive = false, score = 0, timeLeft = 15, gameTimer, heartTimer;
+let gameActive = false;
+let score = 0;
+let timeLeft = 15;
+let gameTimer;
+let heartTimer;
 function startGame() {
   if (gameActive) return;
-  gameActive = true; score = 0; timeLeft = 15;
-  document.getElementById('score').textContent = 0;
-  document.getElementById('timer').textContent = 15;
-  document.getElementById('gameBtn').style.display = 'none';
+  gameActive = true;
+  score = 0;
+  timeLeft = 15;
+  const scoreEl = document.getElementById('score');
+  const timerEl = document.getElementById('timer');
+  const btn = document.getElementById('gameBtn');
+  if (scoreEl) scoreEl.textContent = 0;
+  if (timerEl) timerEl.textContent = 15;
+  if (btn) btn.style.display = 'none';
   gameTimer = setInterval(() => {
     timeLeft--;
-    document.getElementById('timer').textContent = timeLeft;
+    if (timerEl) timerEl.textContent = timeLeft;
     if (timeLeft <= 0) endGame();
   }, 1000);
   spawnHeart();
@@ -650,14 +664,16 @@ function startGame() {
 function spawnHeart() {
   if (!gameActive) return;
   const area = document.getElementById('gameArea');
+  if (!area) return;
   const h = document.createElement('div');
   h.className = 'heart-target';
-  h.textContent = ['❤️','💖','💕','💗'][Math.floor(Math.random() * 4)];
+  h.textContent = ['🎈','🎉','🎁','⭐'][Math.floor(Math.random() * 4)];
   h.style.left = Math.random() * (area.clientWidth - 50) + 'px';
   h.style.top = Math.random() * (area.clientHeight - 50) + 'px';
   h.onclick = () => {
     score++;
-    document.getElementById('score').textContent = score;
+    const s = document.getElementById('score');
+    if (s) s.textContent = score;
     h.remove();
   };
   area.appendChild(h);
@@ -670,53 +686,58 @@ function endGame() {
   clearTimeout(heartTimer);
   document.querySelectorAll('.heart-target').forEach(h => h.remove());
   const btn = document.getElementById('gameBtn');
-  btn.style.display = 'block';
-  btn.textContent = 'Твой счёт: ' + score + '. Ещё раз?';
+  if (btn) {
+    btn.style.display = 'block';
+    btn.textContent = 'Твой счёт: ' + score + '. Ещё раз?';
+  }
   if (score >= 15) startConfetti();
 }
 
 /* ================== КОНФЕТТИ ================== */
 const canvas = document.getElementById('confetti');
-const ctx = canvas.getContext('2d');
 let particles = [];
 let confettiActive = false;
 
 function resizeCanvas() {
+  if (!canvas) return;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = -10;
-    this.size = Math.random() * 8 + 4;
-    this.speedY = Math.random() * 3 + 2;
-    this.speedX = (Math.random() - 0.5) * 2;
-    this.color = ['#ff69b4','#ff1493','#ffb6c1','#fff','#ffd700'][Math.floor(Math.random() * 5)];
-    this.rotation = Math.random() * 360;
-    this.rotationSpeed = (Math.random() - 0.5) * 10;
-    this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
-  }
-  update() {
-    this.y += this.speedY;
-    this.x += this.speedX;
-    this.rotation += this.rotationSpeed;
-    return this.y < canvas.height + 20;
-  }
-  draw() {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.rotation * Math.PI / 180);
-    ctx.fillStyle = this.color;
-    if (this.shape === 'rect') ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-    else { ctx.beginPath(); ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2); ctx.fill(); }
-    ctx.restore();
-  }
+function Particle() {
+  this.x = Math.random() * (canvas ? canvas.width : 1000);
+  this.y = -10;
+  this.size = Math.random() * 8 + 4;
+  this.speedY = Math.random() * 3 + 2;
+  this.speedX = (Math.random() - 0.5) * 2;
+  this.color = ['#a855f7','#7c3aed','#c4b5fd','#fff','#e9d5ff'][Math.floor(Math.random() * 5)];
+  this.rotation = Math.random() * 360;
+  this.rotationSpeed = (Math.random() - 0.5) * 10;
+  this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
 }
+Particle.prototype.update = function() {
+  this.y += this.speedY;
+  this.x += this.speedX;
+  this.rotation += this.rotationSpeed;
+  return this.y < (canvas ? canvas.height + 20 : 800);
+};
+Particle.prototype.draw = function() {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.save();
+  ctx.translate(this.x, this.y);
+  ctx.rotate(this.rotation * Math.PI / 180);
+  ctx.fillStyle = this.color;
+  if (this.shape === 'rect') ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+  else { ctx.beginPath(); ctx.arc(0, 0, this.size/2, 0, Math.PI*2); ctx.fill(); }
+  ctx.restore();
+};
+
 function animateConfetti() {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
   if (!confettiActive && particles.length === 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     return;
@@ -729,6 +750,7 @@ function animateConfetti() {
   });
   requestAnimationFrame(animateConfetti);
 }
+
 function startConfetti() {
   confettiActive = true;
   for (let i = 0; i < 150; i++) {
@@ -737,32 +759,16 @@ function startConfetti() {
   animateConfetti();
   setTimeout(() => { confettiActive = false; }, 5000);
 }
-const finalObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { startConfetti(); finalObs.disconnect(); }
-  });
-}, { threshold: 0.5 });
-finalObs.observe(document.querySelector('.final-section'));
 
-/* ================== КУРСОР-СЕРДЕЧКО ================== */
-document.addEventListener('mousemove', e => {
-  if (Math.random() > 0.9) {
-    const h = document.createElement('div');
-    h.textContent = '✨';
-    h.style.position = 'fixed';
-    h.style.left = e.clientX + 'px';
-    h.style.top = e.clientY + 'px';
-    h.style.pointerEvents = 'none';
-    h.style.fontSize = (Math.random() * 15 + 10) + 'px';
-    h.style.zIndex = '9999';
-    h.style.transition = 'all 1s ease-out';
-    document.body.appendChild(h);
-    setTimeout(() => {
-      h.style.transform = `translate(${(Math.random()-0.5)*100}px, -100px) scale(0)`;
-      h.style.opacity = '0';
-    }, 10);
-    setTimeout(() => h.remove(), 1100);
-  }
+const finalSection = document.querySelector('.final-section');
+if (finalSection) {
+  const finalObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { startConfetti(); finalObs.disconnect(); }
+    });
+  }, { threshold: 0.5 });
+  finalObs.observe(finalSection);
+}
 });
 </script>
 </body>
