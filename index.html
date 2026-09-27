@@ -29,14 +29,43 @@ body {
 .lock-title { font-size: 1.3rem; color: rgba(255,255,255,0.9); margin-bottom: 10px; font-weight: 300; }
 .lock-hint { color: rgba(255,255,255,0.5); margin-bottom: 25px; font-size: 0.95rem; }
 #lockInput {
-  width: 100%; padding: 15px 20px;
-  border: 2px solid rgba(255,105,180,0.4);
-  background: rgba(255,105,180,0.05);
-  border-radius: 50px; color: #fff;
-  font-size: 1.1rem; text-align: center;
-  letter-spacing: 3px; margin-bottom: 15px;
-  outline: none; transition: border 0.3s;
+  width: 100%;
+  max-width: 260px;
+  padding: 16px 24px;
+  border: 2px solid rgba(168,85,247,0.4);
+  background: transparent;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 1.4rem;
+  text-align: center;
+  letter-spacing: 6px;
+  margin: 0 auto 20px;
+  outline: none;
+  transition: all 0.3s;
   font-family: inherit;
+  display: block;
+  box-shadow: inset 0 0 20px rgba(168,85,247,0.1);
+}
+
+#lockInput::placeholder {
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 6px;
+}
+
+#lockInput:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 30px rgba(168,85,247,0.6), inset 0 0 20px rgba(168,85,247,0.15);
+  background: rgba(168,85,247,0.05);
+}
+
+/* Убиваем автозаполнение Chrome — жёлтый/фиолетовый фон */
+#lockInput:-webkit-autofill,
+#lockInput:-webkit-autofill:hover,
+#lockInput:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0px 1000px #1a0a2a inset;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #fff;
 }
 #lockInput:focus { border-color: #ff69b4; box-shadow: 0 0 20px rgba(255,105,180,0.5); }
 .lock-content button {
@@ -373,16 +402,6 @@ body {
   </div>
 </section>
 
-<!-- PLAYLIST -->
-<section class="playlist-section">
-  <h2 class="section-title">Песни о нас</h2>
-  <div class="playlist">
-    <div class="playlist-item"><div class="playlist-num">01</div><div class="playlist-info"><h4>Perfect</h4><p>Ed Sheeran</p></div><div class="playlist-heart">❤️</div></div>
-    <div class="playlist-item"><div class="playlist-num">02</div><div class="playlist-info"><h4>Наша песня</h4><p>Замени на свою</p></div><div class="playlist-heart">❤️</div></div>
-    <div class="playlist-item"><div class="playlist-num">03</div><div class="playlist-info"><h4>Твоё имя</h4><p>Песня, которая ассоциируется с тобой</p></div><div class="playlist-heart">❤️</div></div>
-  </div>
-</section>
-
 <!-- WISHES -->
 <section class="wishes-section">
   <h2 class="section-title">Что я тебе желаю</h2>
@@ -479,7 +498,7 @@ function checkPassword() {
     setTimeout(() => document.getElementById('lockScreen').remove(), 800);
     startConfetti();
   } else {
-    error.textContent = 'Не то. Попробуй ещё раз ❤️';
+    error.textContent = 'Неправильно. Когда у тебя ДР? 🎂';
     document.getElementById('lockInput').value = '';
   }
 }
